@@ -50,7 +50,7 @@ function checkPosition(btnId) {
     var clickedBtn = document.getElementById(btnId);
     var btnIdCopy = btnId, countDigits = 0;
     var line = 0, column = 0;
-    while(btnIdCopy > 0) {
+    while (btnIdCopy > 0) {
         ++countDigits;
         btnIdCopy /= 10;
         btnIdCopy = Math.floor(btnIdCopy);
@@ -163,7 +163,7 @@ function checkCloseCells(line, column) {
 function flagThis(btnId) {
     document.addEventListener('contextmenu', event => event.preventDefault());
     var clickedBtn = document.getElementById(btnId);
-    if(clickedBtn.className == "unpressedBtn") {
+    if (clickedBtn.className == "unpressedBtn") {
         --marksForBombs;
         clickedBtn.className = "flaggedBtn";
     } else if (clickedBtn.className == "flaggedBtn") {

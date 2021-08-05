@@ -33,11 +33,10 @@ function spawnBombs() {
 }
 
 function markCloseCells(line, column) {
-    var x = [-1, 0, 1];
-    for (var i = 0; i < 3; ++i) {
-        for (var j = 0; j < 3; ++j) {
-            if ((line + x[i] > 0 && line + x[i] <= 8) && (column + x[j] > 0 && column + x[j] <= 16)) {
-                var markThisCell = document.getElementById((line + x[i]) + "" + (column + x[j]));
+    for (var i = -1; i < 2; ++i) {
+        for (var j = -1; j < 2; ++j) {
+            if ((line + i > 0 && line + i <= 8) && (column + j > 0 && column + j <= 16)) {
+                var markThisCell = document.getElementById((line + i) + "" + (column + j));
                 if (markThisCell.innerText != "B") {
                     ++markThisCell.innerText;
                 }
@@ -68,7 +67,7 @@ function checkPosition(btnId) {
         clickedBtn.setAttribute("class", "pressedBtn");
         --goodCells;
         if (document.getElementById(line + "" + column).innerHTML == 0) {
-            checkCloseCells(line, column);
+            uncoverCloseCells(line, column);
         }
         checkWin();
     } else if (clickedBtn.innerHTML == "B") {
@@ -79,41 +78,38 @@ function checkPosition(btnId) {
     }
 }
 
-function checkCloseCells(line, column) {
+function uncoverCloseCells(line, column) {
     for (var i = line; i <= 8; ++i) {
         var checkLine = document.getElementById(i + "" + column);
-        if (checkLine.innerHTML == 0 && checkLine.className == "unpressedBtn") {
+        if (checkLine.innerHTML >= 0 && checkLine.className == "unpressedBtn") {
             checkLine.setAttribute("class", "pressedBtn");
             --goodCells;
-        } else if (checkLine.innerHTML > 0 && checkLine.className == "unpressedBtn") {
-            checkLine.setAttribute("class", "pressedBtn");
-            --goodCells;
-            break;
+            if (checkLine.innerHTML > 0) {
+                break;
+            }
         } else if (checkLine.innerHTML == "B" || (checkLine.className == "pressedBtn" && i > line)) {
             break;
         }
         for (var j = column + 1; j <= 16; ++j) {
             var checkCol = document.getElementById(i + "" + j);
-            if (checkCol.innerHTML == 0 && checkCol.className == "unpressedBtn") {
+            if (checkCol.innerHTML >= 0 && checkCol.className == "unpressedBtn") {
                 checkCol.setAttribute("class", "pressedBtn");
                 --goodCells;
-            } else if (checkCol.innerHTML > 0 && checkCol.className == "unpressedBtn") {
-                checkCol.setAttribute("class", "pressedBtn");
-                --goodCells;
-                break;
+                if (checkCol.innerHTML > 0) {
+                    break;
+                }
             } else {
                 break;
             }
         }
         for (var j = column - 1; j > 0; --j) {
             var checkCol = document.getElementById(i + "" + j);
-            if (checkCol.innerHTML == 0 && checkCol.className == "unpressedBtn") {
+            if (checkCol.innerHTML >= 0 && checkCol.className == "unpressedBtn") {
                 checkCol.setAttribute("class", "pressedBtn");
                 --goodCells;
-            } else if (checkCol.innerHTML > 0 && checkCol.className == "unpressedBtn") {
-                checkCol.setAttribute("class", "pressedBtn");
-                --goodCells;
-                break;
+                if (checkCol.innerHTML > 0) {
+                    break;
+                }
             } else {
                 break;
             }
@@ -121,44 +117,41 @@ function checkCloseCells(line, column) {
     }
     for (var i = line; i > 0; --i) {
         var checkLine = document.getElementById(i + "" + column);
-        if (checkLine.innerHTML == 0 && checkLine.className == "unpressedBtn") {
+        if (checkLine.innerHTML >= 0 && checkLine.className == "unpressedBtn") {
             checkLine.setAttribute("class", "pressedBtn");
             --goodCells;
-        } else if (checkLine.innerHTML > 0 && checkLine.className == "unpressedBtn") {
-            checkLine.setAttribute("class", "pressedBtn");
-            --goodCells;
-            break;
+            if (checkLine.innerHTML > 0) {
+                break;
+            }
         } else if (checkLine.innerHTML == "B" || (checkLine.className == "pressedBtn" && i > line)) {
             break;
         }
         for (var j = column + 1; j <= 16; ++j) {
             var checkCol = document.getElementById(i + "" + j);
-            if (checkCol.innerHTML == 0 && checkCol.className == "unpressedBtn") {
+            if (checkCol.innerHTML >= 0 && checkCol.className == "unpressedBtn") {
                 checkCol.setAttribute("class", "pressedBtn");
                 --goodCells;
-            } else if (checkCol.innerHTML > 0 && checkCol.className == "unpressedBtn") {
-                checkCol.setAttribute("class", "pressedBtn");
-                --goodCells;
-                break;
+                if (checkCol.innerHTML > 0) {
+                    break;
+                }
             } else {
                 break;
             }
         }
         for (var j = column - 1; j > 0; --j) {
             var checkCol = document.getElementById(i + "" + j);
-            if (checkCol.innerHTML == 0 && checkCol.className == "unpressedBtn") {
+            if (checkCol.innerHTML >= 0 && checkCol.className == "unpressedBtn") {
                 checkCol.setAttribute("class", "pressedBtn");
                 --goodCells;
-            } else if (checkCol.innerHTML > 0 && checkCol.className == "unpressedBtn") {
-                checkCol.setAttribute("class", "pressedBtn");
-                --goodCells;
-                break;
+                if (checkCol.innerHTML > 0) {
+                    break;
+                }
             } else {
                 break;
             }
         }
     }
-} 
+}
 
 function flagThis(btnId) {
     document.addEventListener('contextmenu', event => event.preventDefault());

@@ -79,75 +79,17 @@ function checkPosition(btnId) {
 }
 
 function uncoverCloseCells(line, column) {
-    for (var i = line; i <= 8; ++i) {
-        var checkLine = document.getElementById(i + "" + column);
-        if (checkLine.innerHTML >= 0 && checkLine.className == "unpressedBtn") {
-            checkLine.setAttribute("class", "pressedBtn");
-            --goodCells;
-            if (checkLine.innerHTML > 0) {
-                break;
-            }
-        } else if (checkLine.innerHTML == "B" || (checkLine.className == "pressedBtn" && i > line)) {
-            break;
-        }
-        for (var j = column + 1; j <= 16; ++j) {
-            var checkCol = document.getElementById(i + "" + j);
-            if (checkCol.innerHTML >= 0 && checkCol.className == "unpressedBtn") {
-                checkCol.setAttribute("class", "pressedBtn");
-                --goodCells;
-                if (checkCol.innerHTML > 0) {
-                    break;
+    for (var i = -2; i <= 2; ++i) {
+        var thisLine = line + i;
+        if (thisLine > 0 && thisLine <= 8) {
+            for (var j = -2; j <= 2; ++j) {
+                var thisColumn = column + j;
+                if (thisColumn > 0 && thisColumn <= 16) {
+                    var uncoverThisCell = document.getElementById(thisLine + "" + thisColumn);
+                    if (uncoverThisCell.innerHTML >= 0 && uncoverThisCell.className == "unpressedBtn") {
+                        uncoverThisCell.setAttribute("class", "pressedBtn");
+                    }
                 }
-            } else {
-                break;
-            }
-        }
-        for (var j = column - 1; j > 0; --j) {
-            var checkCol = document.getElementById(i + "" + j);
-            if (checkCol.innerHTML >= 0 && checkCol.className == "unpressedBtn") {
-                checkCol.setAttribute("class", "pressedBtn");
-                --goodCells;
-                if (checkCol.innerHTML > 0) {
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
-    }
-    for (var i = line; i > 0; --i) {
-        var checkLine = document.getElementById(i + "" + column);
-        if (checkLine.innerHTML >= 0 && checkLine.className == "unpressedBtn") {
-            checkLine.setAttribute("class", "pressedBtn");
-            --goodCells;
-            if (checkLine.innerHTML > 0) {
-                break;
-            }
-        } else if (checkLine.innerHTML == "B" || (checkLine.className == "pressedBtn" && i > line)) {
-            break;
-        }
-        for (var j = column + 1; j <= 16; ++j) {
-            var checkCol = document.getElementById(i + "" + j);
-            if (checkCol.innerHTML >= 0 && checkCol.className == "unpressedBtn") {
-                checkCol.setAttribute("class", "pressedBtn");
-                --goodCells;
-                if (checkCol.innerHTML > 0) {
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
-        for (var j = column - 1; j > 0; --j) {
-            var checkCol = document.getElementById(i + "" + j);
-            if (checkCol.innerHTML >= 0 && checkCol.className == "unpressedBtn") {
-                checkCol.setAttribute("class", "pressedBtn");
-                --goodCells;
-                if (checkCol.innerHTML > 0) {
-                    break;
-                }
-            } else {
-                break;
             }
         }
     }
